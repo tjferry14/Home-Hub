@@ -1,8 +1,7 @@
 # coding: utf-8
-import urllib2, json, location, datetime
+import urllib2, json, location
 import ui, console, time
-import twitter, urllib
-import feedparser
+import twitter, urllib, feedparser
 
 v = ui.load_view()
 timeline = v['timeline']
