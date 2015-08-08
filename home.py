@@ -5,7 +5,6 @@ import twitter, urllib, feedparser
 
 v = ui.load_view()
 timeline = v['timeline']
-rss_view = v['rss_view']
 
 all_accounts = twitter.get_all_accounts()
 if len(all_accounts) >= 1:
@@ -17,7 +16,6 @@ feed = feedparser.parse('http://rss.cnn.com/rss/cnn_topstories.rss')
 entries = feed['entries']
 
 def get_tweets(sender):
-	global tlist
 	tlist = []
 	tweets = twitter.get_home_timeline(account)
 	console.show_activity('Refreshing')
