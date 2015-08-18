@@ -48,13 +48,23 @@ def forecast(weatherapi, forecastapi):
 	v['today_high_temp'].text = str(round(weatherapi['main']['temp_max'], 0)) + '°'
 	v['today_low_temp'].text = str(round(weatherapi['main']['temp_min'], 0)) + '°'
 	v['current_temp_temp'].text = str(round(weatherapi['main']['temp'], 0)) + '°'
+	
+def load_articles():
 	feed_entries = []
 	for entry in entries:
 		feed_entries.append(entry['title'])
-
+	
 	v['rss_view'].data_source = ui.ListDataSource(items=feed_entries)
+	
+class TheDelegate(object):
+	def tableview_did_select(self, tableview, section, row):
+		print 'Print article'
+			
+v['rss_view'].delegate = TheDelegate()
 
 sender = 0
 place()
 get_tweets(sender)
+load_articles()
+
 v.present('full_screen')
