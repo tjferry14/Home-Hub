@@ -1,0 +1,187 @@
+[
+  {
+    "class" : "View",
+    "attributes" : {
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "enabled" : true,
+      "flex" : "",
+      "name" : "Home",
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "custom_class" : "HomeHubView"
+    },
+    "frame" : "{{0, 0}, {1024, 768}}",
+    "selected" : false,
+    "nodes" : [
+      {
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "text" : "Today's High",
+          "font_name" : "<System>",
+          "name" : "today_high_label",
+          "class" : "Label",
+          "alignment" : "left",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "8CA30BBB-2314-4D0C-8892-A59021D06A3E"
+        },
+        "frame" : "{{6, 6}, {109, 32}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 25,
+          "text" : "tempmax",
+          "font_name" : "<System-Bold>",
+          "name" : "temp_max",
+          "class" : "Label",
+          "alignment" : "center",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "378C3EED-FA52-4DF7-9C11-72125FE61F5F"
+        },
+        "frame" : "{{6, 31}, {109, 68}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "text" : "Today's Low",
+          "font_name" : "<System>",
+          "name" : "today_low_label",
+          "class" : "Label",
+          "alignment" : "left",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "8CA30BBB-2314-4D0C-8892-A59021D06A3E"
+        },
+        "frame" : "{{123, 6}, {108, 32}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 25,
+          "text" : "tempmin",
+          "font_name" : "<System-Bold>",
+          "name" : "temp_min",
+          "class" : "Label",
+          "alignment" : "center",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "378C3EED-FA52-4DF7-9C11-72125FE61F5F"
+        },
+        "frame" : "{{123, 31}, {109, 68}}",
+        "selected" : true,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "text" : "Current Temp",
+          "font_name" : "<System>",
+          "name" : "current_temp_label",
+          "class" : "Label",
+          "alignment" : "left",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "8CA30BBB-2314-4D0C-8892-A59021D06A3E"
+        },
+        "frame" : "{{239, 6}, {119, 32}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 25,
+          "text" : "temp",
+          "font_name" : "<System-Bold>",
+          "name" : "temp",
+          "class" : "Label",
+          "alignment" : "center",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "378C3EED-FA52-4DF7-9C11-72125FE61F5F"
+        },
+        "frame" : "{{240, 31}, {109, 68}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "TableView",
+        "attributes" : {
+          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+          "data_source_number_of_lines" : 3,
+          "enabled" : true,
+          "flex" : "WH",
+          "row_height" : 65,
+          "data_source_items" : "",
+          "data_source_delete_enabled" : true,
+          "name" : "timeline",
+          "border_width" : 1,
+          "uuid" : "99C6255F-0E22-4BDB-99F3-192CAA4197A6",
+          "data_source_font_size" : 12
+        },
+        "frame" : "{{6, 144}, {352, 618}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "text" : "Recent Tweets",
+          "font_name" : "<System-Bold>",
+          "name" : "label1",
+          "class" : "Label",
+          "alignment" : "left",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "EC905F4A-F44C-487F-B1A2-B0A6E31C07D0"
+        },
+        "frame" : "{{6, 107}, {343, 32}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      },
+      {
+        "class" : "TableView",
+        "attributes" : {
+          "data_source_font_size" : 18,
+          "data_source_number_of_lines" : 1,
+          "flex" : "WH",
+          "name" : "rss_view",
+          "row_height" : 60,
+          "data_source_delete_enabled" : false,
+          "class" : "TableView",
+          "data_source_items" : "",
+          "frame" : "{{412, 284}, {200, 200}}",
+          "background_color" : "RGBA(1.0, 1.0, 1.0, 1.0)",
+          "uuid" : "1530178D-71D6-4B7F-A26A-CCA7D3FD898E"
+        },
+        "frame" : "{{366, 6}, {652, 756}}",
+        "selected" : false,
+        "nodes" : [
+
+        ]
+      }
+    ]
+  }
+]
