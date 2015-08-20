@@ -53,10 +53,8 @@ class HomeHubView(ui.View):
 
     def tableview_did_select(self, tableview, section, row):
         selected = tableview.data_source.items[row]
-        selected_title = selected['title'] if isinstance(selected, dict) else selected
-        selected_url = (selected['link'] if isinstance(selected, dict) else selected)
-        webview = ui.WebView(name = selected_title)
-        webview.load_url(selected_url)
+        webview = ui.WebView(name = selected['title'] if isinstance(selected, dict) else selected)
+        webview.load_url(selected['link'] if isinstance(selected, dict) else selected)
         webview.present()
 
 ui.load_view().present()
