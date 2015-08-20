@@ -23,6 +23,8 @@ class HomeHubView(ui.View):
         self.twitter_account = get_first_twitter_account()
 
     def did_load(self):
+        self['rss_view'].delegate = self
+        self['timeline'].delegate = self
         self.update_all()
 
     def update_all(self):
@@ -32,7 +34,6 @@ class HomeHubView(ui.View):
 
     def update_news(self):
         self['rss_view'].data_source.items = [entry for entry in feedparser.parse(news_url)['entries']]
-        self['rss_view'].action = self.tableview_did_select
 
     def update_tweets(self):
         if not self.twitter_account:
@@ -52,7 +53,7 @@ class HomeHubView(ui.View):
                 self[key].text = '{}°'.format(round(weather_dict['main'][key]))
 
     def tableview_did_select(self, tableview, section, row):
-        # Called when a row was selected.
-        print 'Row selected'
+        selected = tableview.data_source.items[row]
+        console.hud_alert(selected['title'] if isinstance(selected, dict) else selected)
 
 ui.load_view().present()
