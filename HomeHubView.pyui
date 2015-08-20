@@ -80,7 +80,7 @@
           "uuid" : "378C3EED-FA52-4DF7-9C11-72125FE61F5F"
         },
         "frame" : "{{123, 31}, {109, 68}}",
-        "selected" : true,
+        "selected" : false,
         "nodes" : [
 
         ]
@@ -133,9 +133,10 @@
           "data_source_items" : "",
           "data_source_delete_enabled" : true,
           "name" : "timeline",
-          "border_width" : 1,
+          "border_width" : 0.5,
           "uuid" : "99C6255F-0E22-4BDB-99F3-192CAA4197A6",
-          "data_source_font_size" : 12
+          "data_source_font_size" : 12,
+          "corner_radius" : 0
         },
         "frame" : "{{6, 144}, {352, 618}}",
         "selected" : false,
@@ -151,7 +152,7 @@
           "font_name" : "<System-Bold>",
           "name" : "label1",
           "class" : "Label",
-          "alignment" : "left",
+          "alignment" : "center",
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "EC905F4A-F44C-487F-B1A2-B0A6E31C07D0"
         },
@@ -177,7 +178,7 @@
           "uuid" : "1530178D-71D6-4B7F-A26A-CCA7D3FD898E"
         },
         "frame" : "{{366, 6}, {652, 756}}",
-        "selected" : false,
+        "selected" : true,
         "nodes" : [
 
         ]
