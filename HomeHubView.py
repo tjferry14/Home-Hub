@@ -1,5 +1,6 @@
 # coding: utf-8
 import console, feedparser, location, requests, twitter, ui
+import webbrowser
 
 news_url = 'http://rss.cnn.com/rss/cnn_topstories.rss'
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
@@ -24,7 +25,6 @@ class HomeHubView(ui.View):
 
     def did_load(self):
         self['rss_view'].delegate = self
-        self['timeline'].delegate = self
         self.update_all()
 
     def update_all(self):
@@ -54,6 +54,6 @@ class HomeHubView(ui.View):
 
     def tableview_did_select(self, tableview, section, row):
         selected = tableview.data_source.items[row]
-        console.hud_alert(selected['title'] if isinstance(selected, dict) else selected)
+        webbrowser.open(selected['link'] if isinstance(selected, dict) else selected)
 
 ui.load_view().present()
