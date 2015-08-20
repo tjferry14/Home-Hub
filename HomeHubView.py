@@ -21,7 +21,6 @@ def get_lat_lon():
 class HomeHubView(ui.View):
     def __init__(self):
         self.twitter_account = get_first_twitter_account()
-        #console.hud_alert('Twitter username: {username}'.format(**self.twitter_account))
 
     def did_load(self):
         self.update_all()
@@ -33,6 +32,7 @@ class HomeHubView(ui.View):
 
     def update_news(self):
         self['rss_view'].data_source.items = [entry for entry in feedparser.parse(news_url)['entries']]
+        self['rss_view'].action = self.tableview_did_select
 
     def update_tweets(self):
         if not self.twitter_account:
@@ -50,5 +50,9 @@ class HomeHubView(ui.View):
         if 'main' in weather_dict:
             for key in 'temp_max temp_min temp'.split():
                 self[key].text = '{}°'.format(round(weather_dict['main'][key]))
+
+    def tableview_did_select(self, tableview, section, row):
+        # Called when a row was selected.
+        print 'Row selected'
 
 ui.load_view().present()
