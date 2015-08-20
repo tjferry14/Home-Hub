@@ -23,8 +23,8 @@ class HomeHubView(ui.View):
         self.twitter_account = get_first_twitter_account()
 
     def did_load(self):
-        self['rss_view'].delegate = self  # these could get...
-        self['timeline'].delegate = self  # moved into the .pyui
+        self['rss_view'].delegate = self
+        self['timeline'].delegate = self
         self.update_all()
 
     def update_all(self):
