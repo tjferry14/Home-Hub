@@ -1,9 +1,15 @@
 # coding: utf-8
-import console, feedparser, location, requests, twitter, ui
+import console, dialogs, feedparser, location, requests, twitter, ui
 
 news_url = 'http://rss.cnn.com/rss/cnn_topstories.rss'
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
 weather_fmt = 'http://api.openweathermap.org/data/2.5/{}?lat={}&lon={}&mode=json&units=imperial'
+
+def make_button_item(image_name, action):
+    button_item = ui.ButtonItem()
+    button_item.image = ui.Image.named(image_name)
+    button_item.action = action
+    return button_item
 
 def get_first_twitter_account():
     try:
@@ -21,6 +27,9 @@ def get_lat_lon():
 class HomeHubView(ui.View):
     def __init__(self):
         self.twitter_account = get_first_twitter_account()
+        settings_but = make_button_item('iob:settings_32', self.settings_action)
+        self.right_button_items = [settings_but]
+        
 
     def did_load(self):
         self['rss_view'].delegate = self
@@ -56,5 +65,9 @@ class HomeHubView(ui.View):
         webview = ui.WebView(name = selected['title'] if isinstance(selected, dict) else selected)
         webview.load_url(selected['link'] if isinstance(selected, dict) else selected)
         webview.present()
+        
+    def settings_action(self, sender):
+        Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': news_url},]
+        settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
 
 ui.load_view().present()
