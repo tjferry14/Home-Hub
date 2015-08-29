@@ -67,7 +67,12 @@ class HomeHubView(ui.View):
         webview.present()
         
     def settings_action(self, sender):
+        global news_url
         Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': news_url},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
+        console.show_activity()
+        news_url = settings['feed']
+        self.update_news()
+        console.hide_activity()
 
 ui.load_view().present()
