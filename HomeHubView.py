@@ -1,9 +1,12 @@
 # coding: utf-8
 import console, dialogs, feedparser, location, requests, twitter, ui
 
-news_url = 'http://rss.cnn.com/rss/cnn_topstories.rss'
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
 weather_fmt = 'http://api.openweathermap.org/data/2.5/{}?lat={}&lon={}&mode=json&units=imperial'
+
+with open('feed.txt') as f:
+    for line in f.readlines():
+        news_url = line
 
 def make_button_item(image_name, action):
     button_item = ui.ButtonItem()
@@ -74,5 +77,7 @@ class HomeHubView(ui.View):
         news_url = settings['feed']
         self.update_news()
         console.hide_activity()
+        with open('feed.txt', 'w') as f:  
+            f.write(news_url)
 
 ui.load_view().present()
