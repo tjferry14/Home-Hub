@@ -8,6 +8,10 @@ with open('feed.txt') as f:
     for line in f.readlines():
         news_url = line
 
+with open('modes.txt') as mode:
+    for line in mode.readlines():
+        twitter_mode = line
+
 def make_button_item(image_name, action):
     button_item = ui.ButtonItem()
     button_item.image = ui.Image.named(image_name)
@@ -32,7 +36,6 @@ class HomeHubView(ui.View):
         self.twitter_account = get_first_twitter_account()
         settings_but = make_button_item('iob:settings_32', self.settings_action)
         self.right_button_items = [settings_but]
-        
 
     def did_load(self):
         self['rss_view'].delegate = self
@@ -40,7 +43,10 @@ class HomeHubView(ui.View):
 
     def update_all(self):
         self.update_news()
-        self.update_tweets()
+        if twitter_mode:
+          self.update_tweets()
+        #else:
+          #pass
         self.update_weather()
 
     def update_news(self):
@@ -70,14 +76,18 @@ class HomeHubView(ui.View):
         webview.present()
         
     def settings_action(self, sender):
-        global news_url
-        Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': news_url},]
+        global news_url, twitter_mode
+        Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': news_url},
+{'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
         console.show_activity()
         news_url = settings['feed']
+        twitter_mode = str(settings['twitter'])
         self.update_news()
         console.hide_activity()
         with open('feed.txt', 'w') as f:  
             f.write(news_url)
+        with open('modes.txt', 'w') as mode:
+            mode.write(twitter_mode)
 
 ui.load_view().present()
