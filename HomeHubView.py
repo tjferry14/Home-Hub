@@ -45,8 +45,8 @@ class HomeHubView(ui.View):
         self.update_news()
         if twitter_mode:
           self.update_tweets()
-        #else:
-          #pass
+        else:
+          pass
         self.update_weather()
 
     def update_news(self):
