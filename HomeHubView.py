@@ -5,9 +5,6 @@ import config
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
 weather_fmt = 'http://api.openweathermap.org/data/2.5/{}?lat={}&lon={}&mode=json&units=imperial'
 
-news_url = config.feed
-twitter_mode = config.twitter_mode
-
 def make_button_item(image_name, action):
     button_item = ui.ButtonItem()
     button_item.image = ui.Image.named(image_name)
@@ -39,14 +36,14 @@ class HomeHubView(ui.View):
 
     def update_all(self):
         self.update_news()
-        if twitter_mode:
+        if config.twitter_mode:
           self.update_tweets()
         else:
           pass
         self.update_weather()
 
     def update_news(self):
-        self['rss_view'].data_source.items = [entry for entry in feedparser.parse(news_url)['entries']]
+        self['rss_view'].data_source.items = [entry for entry in feedparser.parse(config.feed)['entries']]
 
     def update_tweets(self):
         if not self.twitter_account:
@@ -72,9 +69,9 @@ class HomeHubView(ui.View):
         webview.present()
         
     def settings_action(self, sender):
-        global news_url, twitter_mode
-        Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': news_url},
-{'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': twitter_mode},]
+        #global config.feed, config.twitter_mode
+        Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': config.feed},
+{'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': config.twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
         console.show_activity()
         config.feed = settings['feed']
