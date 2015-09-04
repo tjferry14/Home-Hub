@@ -39,7 +39,8 @@ class HomeHubView(ui.View):
         if config.twitter_mode:
           self.update_tweets()
         else:
-          pass
+          self['timeline'].hidden = True
+          self['label1'].hidden = True
         self.update_weather()
 
     def update_news(self):
@@ -69,7 +70,6 @@ class HomeHubView(ui.View):
         webview.present()
         
     def settings_action(self, sender):
-        #global config.feed, config.twitter_mode
         Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': config.feed},
 {'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': config.twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
