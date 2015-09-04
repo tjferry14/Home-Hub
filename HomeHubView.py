@@ -1,16 +1,12 @@
 # coding: utf-8
 import console, dialogs, feedparser, location, requests, twitter, ui
+import config
 
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
 weather_fmt = 'http://api.openweathermap.org/data/2.5/{}?lat={}&lon={}&mode=json&units=imperial'
 
-with open('feed.txt') as f:
-    for line in f.readlines():
-        news_url = line
-
-with open('modes.txt') as mode:
-    for line in mode.readlines():
-        twitter_mode = line
+news_url = config.feed
+twitter_mode = config.twitter_mode
 
 def make_button_item(image_name, action):
     button_item = ui.ButtonItem()
@@ -81,13 +77,9 @@ class HomeHubView(ui.View):
 {'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
         console.show_activity()
-        news_url = settings['feed']
-        twitter_mode = str(settings['twitter'])
+        config.feed = settings['feed']
+        config.twitter_mode = settings['twitter']
         self.update_news()
         console.hide_activity()
-        with open('feed.txt', 'w') as f:  
-            f.write(news_url)
-        with open('modes.txt', 'w') as mode:
-            mode.write(twitter_mode)
 
 ui.load_view().present()
