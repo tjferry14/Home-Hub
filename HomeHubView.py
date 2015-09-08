@@ -1,6 +1,7 @@
 # coding: utf-8
-import console, dialogs, feedparser, location, requests, twitter, ui
+import console, dialogs, feedparser, location, twitter, ui
 import config
+from requests import get
 
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
 weather_fmt = 'http://api.openweathermap.org/data/2.5/{}?lat={}&lon={}&mode=json&units=imperial'
@@ -58,7 +59,7 @@ class HomeHubView(ui.View):
 
     def update_weather(self):
         lat, lon = get_lat_lon()
-        weather_dict = requests.get(weather_fmt.format('weather', lat, lon)).json()
+        weather_dict = get(weather_fmt.format('weather', lat, lon)).json()
         if 'main' in weather_dict:
             for key in 'temp_max temp_min temp'.split():
                 self[key].text = '{}°'.format(round(weather_dict['main'][key]))
@@ -69,13 +70,21 @@ class HomeHubView(ui.View):
         webview.load_url(selected['link'] if isinstance(selected, dict) else selected)
         webview.present()
         
+    def updatepy(self, feed, mode):
+        s = open("config.py").read()
+        s = s.replace(config.feed, feed)
+        s2 = s.replace(str(config.twitter_mode), str(mode))
+        f = open("config.py", 'w')
+        f.write(s)
+        f.write(s2)
+        f.close()
+        
     def settings_action(self, sender):
         Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': config.feed},
 {'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': config.twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
         console.show_activity()
-        config.feed = settings['feed']
-        config.twitter_mode = settings['twitter']
+        self.updatepy(settings['feed'], settings['twitter'])
         self.update_news()
         console.hide_activity()
 
