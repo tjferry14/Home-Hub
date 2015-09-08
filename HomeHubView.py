@@ -73,11 +73,17 @@ class HomeHubView(ui.View):
     def updatepy(self, feed, mode):
         s = open("config.py").read()
         s = s.replace(config.feed, feed)
-        s2 = s.replace(str(config.twitter_mode), str(mode))
+        update_mode = s.replace(str(config.twitter_mode), str(mode))
         f = open("config.py", 'w')
         f.write(s)
-        f.write(s2)
+        f.seek(0)
+        f.write(update_mode)
         f.close()
+        s = open("config.py").read()
+        if 'Truee' in s: # weird bug found
+          s = s.replace('Truee', 'True')
+          f = open("config.py", 'w')
+          f.write(s)
         
     def settings_action(self, sender):
         Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': config.feed},
