@@ -3,6 +3,8 @@ import console, dialogs, feedparser, location, twitter, ui
 import config
 from requests import get
 
+console.show_activity('Loading')
+
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
 weather_fmt = 'http://api.openweathermap.org/data/2.5/{}?lat={}&lon={}&mode=json&units=imperial'
 
@@ -45,7 +47,7 @@ class HomeHubView(ui.View):
         self.update_weather()
 
     def update_news(self):
-        self['rss_view'].data_source.items = [entry for entry in feedparser.parse(config.feed)['entries']]
+        self['rss_view'].data_source.items = [entry for entry in feedparser.parse(config.feed_1)['entries']] + [entry for entry in feedparser.parse(config.feed_2)['entries']]
 
     def update_tweets(self):
         if not self.twitter_account:
@@ -70,12 +72,13 @@ class HomeHubView(ui.View):
         webview.load_url(selected['link'] if isinstance(selected, dict) else selected)
         webview.present()
         
-    def updatepy(self, feed, mode):
+    def updatepy(self, feed1, feed2, mode):
         s = open("config.py").read()
-        s = s.replace(config.feed, feed)
+        update_feed1 = s.replace(config.feed_1, feed1)
+        update_feed2 = s.replace(config.feed_2, feed2)
         update_mode = s.replace(str(config.twitter_mode), str(mode))
         f = open("config.py", 'w')
-        f.write(s)
+        f.write(update_feed)
         f.seek(0)
         f.write(update_mode)
         f.close()
@@ -86,12 +89,17 @@ class HomeHubView(ui.View):
           f.write(s)
         
     def settings_action(self, sender):
-        Dialog_List =[{'type':'text','title':'RSS Feed','key':'feed', 'value': config.feed},
+        Dialog_List =[{'type':'text','title':'RSS Feed 1','key':'feed1', 'value': config.feed_1},
+        {'type':'text','title':'RSS Feed 2','key':'feed2', 'value': config.feed_2},
 {'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': config.twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
         console.show_activity()
-        self.updatepy(settings['feed'], settings['twitter'])
+        if settings == None:
+          print 'Cancelled'
+        else:
+          self.updatepy(settings['feed1'], settings['feed2'], settings['twitter'])
         self.update_news()
         console.hide_activity()
 
 ui.load_view().present()
+console.hide_activity()
