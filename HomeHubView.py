@@ -30,8 +30,8 @@ def get_lat_lon():
 class HomeHubView(ui.View):
     def __init__(self):
         self.twitter_account = get_first_twitter_account()
-        settings_but = make_button_item('iob:settings_32', self.settings_action)
-        self.right_button_items = [settings_but]
+        #settings_but = make_button_item('iob:settings_32', self.settings_action)
+        #self.right_button_items = [settings_but]
 
     def did_load(self):
         self['rss_view'].delegate = self
@@ -47,7 +47,9 @@ class HomeHubView(ui.View):
         self.update_weather()
 
     def update_news(self):
-        self['rss_view'].data_source.items = [entry for entry in feedparser.parse(config.feed_1)['entries']] + [entry for entry in feedparser.parse(config.feed_2)['entries']]
+        for feed in config.feeds:
+             list = ([entry for entry in feedparser.parse(feed)['entries']])
+        self['rss_view'].data_source.items = list
 
     def update_tweets(self):
         if not self.twitter_account:
@@ -71,7 +73,7 @@ class HomeHubView(ui.View):
         webview = ui.WebView(name = selected['title'] if isinstance(selected, dict) else selected)
         webview.load_url(selected['link'] if isinstance(selected, dict) else selected)
         webview.present()
-        
+        '''
     def updatepy(self, feed1, feed2, mode):
         s = open("config.py").read()
         update_feed1 = s.replace(config.feed_1, feed1)
@@ -101,7 +103,7 @@ class HomeHubView(ui.View):
         else:
           self.updatepy(settings['feed1'], settings['feed2'], settings['twitter'])
         self.update_news()
-        console.hide_activity()
+        console.hide_activity()'''
 
 ui.load_view().present()
 console.hide_activity()
