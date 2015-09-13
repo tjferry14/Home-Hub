@@ -3,6 +3,7 @@ import console, dialogs, feedparser, location, twitter, ui
 import config
 from requests import get
 
+
 console.show_activity('Loading')
 
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
@@ -47,9 +48,12 @@ class HomeHubView(ui.View):
         self.update_weather()
 
     def update_news(self):
-        for feed in config.feeds:
-             list = ([entry for entry in feedparser.parse(feed)['entries']])
-        self['rss_view'].data_source.items = list
+        feeds = []
+        posts = []
+        for url in config.feeds:
+            feeds.append(feedparser.parse(url))
+            posts.extend(feedparser.parse(url)['entries'])
+            self['rss_view'].data_source.items = [post.title for post in posts]
 
     def update_tweets(self):
         if not self.twitter_account:
@@ -98,7 +102,7 @@ class HomeHubView(ui.View):
 {'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': config.twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
         console.show_activity()
-        if settings == None:
+        if settings is None:
           print 'Cancelled'
         else:
           self.updatepy(settings['feed1'], settings['feed2'], settings['twitter'])
