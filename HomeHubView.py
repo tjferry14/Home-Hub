@@ -3,7 +3,6 @@ import console, dialogs, feedparser, location, twitter, ui
 import config
 from requests import get
 
-
 console.show_activity('Loading')
 
 twitter_err = "You don't have any Twitter accounts (or haven't given permission to access them)."
@@ -31,8 +30,8 @@ def get_lat_lon():
 class HomeHubView(ui.View):
     def __init__(self):
         self.twitter_account = get_first_twitter_account()
-        #settings_but = make_button_item('iob:settings_32', self.settings_action)
-        #self.right_button_items = [settings_but]
+        settings_but = make_button_item('iob:settings_32', self.settings_action)
+        self.right_button_items = [settings_but]
 
     def did_load(self):
         self['rss_view'].delegate = self
@@ -48,13 +47,9 @@ class HomeHubView(ui.View):
         self.update_weather()
 
     def update_news(self):
-        feeds = []
-        posts = []
         for url in config.feeds:
-            feeds.append(feedparser.parse(url))
-            posts.extend(feedparser.parse(url)['entries'])
-            self['rss_view'].data_source.items = [post.title for post in posts]
-
+            self['rss_view'].data_source.items = [entry for entry in feedparser.parse(url)['entries']]
+            
     def update_tweets(self):
         if not self.twitter_account:
             return
@@ -94,20 +89,20 @@ class HomeHubView(ui.View):
         if 'Truee' in s: # weird bug found
           s = s.replace('Truee', 'True')
           f = open("config.py", 'w')
-          f.write(s)
+          f.write(s)'''
         
     def settings_action(self, sender):
-        Dialog_List =[{'type':'text','title':'RSS Feed 1','key':'feed1', 'value': config.feed_1},
-        {'type':'text','title':'RSS Feed 2','key':'feed2', 'value': config.feed_2},
+        Dialog_List =[{'type':'text','title':'RSS Feed 1','key':'feeds', 'value': config.feeds},
+        #{'type':'text','title':'RSS Feed 2','key':'feed2', 'value': config.feed_2},
 {'type': 'switch', 'title': 'Twitter Feed', 'key':'twitter', 'value': config.twitter_mode},]
         settings = dialogs.form_dialog(title='Settings', fields=Dialog_List)
         console.show_activity()
-        if settings is None:
-          print 'Cancelled'
-        else:
-          self.updatepy(settings['feed1'], settings['feed2'], settings['twitter'])
+        #if settings is None:
+          #print 'Cancelled'
+        #else:
+          #self.updatepy(settings['feed1'], settings['feed2'], settings['twitter'])
         self.update_news()
-        console.hide_activity()'''
+        console.hide_activity()
 
 ui.load_view().present()
 console.hide_activity()
